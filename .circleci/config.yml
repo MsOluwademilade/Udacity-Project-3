@@ -184,7 +184,7 @@ jobs:
           name: "Run ansible playbook"
           command: |
             cd .circleci/ansible
-            ansible-playbook -i inventory.txt configure-server.ym
+            ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment
 
           
