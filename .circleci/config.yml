@@ -151,7 +151,7 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --tags project=udapeople \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID='${CIRCLE_WORKFLOW_ID:0:7}' \
               --tags project=udapeople 
       - run:
           name: Add EC2 instance ip to Ansible inventory
