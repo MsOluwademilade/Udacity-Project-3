@@ -227,6 +227,10 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
+          name: Install tar utility
+          command: |
+            yum install -y tar gzip
+      - run:
           name: Install dependencies
           command: |
             sudo apt-get update && sudo apt-get install python -y
