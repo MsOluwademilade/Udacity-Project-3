@@ -229,7 +229,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache tar gzip nodejs npm aws-cli curl
+            sudo apt-get update && sudo apt-get install python -y
+            sudo apt-get -qq install awscli
       - run:
           name: Get backend url
           command: |
@@ -250,7 +251,6 @@ jobs:
             cd frontend
             npm install
             npm run build
-            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # - destroy-environment
       # Here's where you will add some code to rollback on failure      
