@@ -207,6 +207,7 @@ jobs:
             #!/bin/bash -eo pipeline
             cd backend
             npm install 
+            sudo apt-get update && sudo apt-get install -y ca-certificates
             npm run migrations --force>
             npm run migrations > migrations_dump.txt
       - run: 
