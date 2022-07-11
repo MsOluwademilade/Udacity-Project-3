@@ -207,6 +207,7 @@ jobs:
             #!/bin/bash -eo pipeline
             cd backend
             npm install 
+            sudo apt-get update && sudo apt-get install -y ca-certificates
             npm run migrations --force>
             npm run migrations > migrations_dump.txt
       - run: 
@@ -259,19 +260,37 @@ jobs:
                     
 #   deploy-backend:
 #     docker:
-#       # Docker image here that supports Ansible
+#       - image: cimg/python:3.10.4
 #     steps:
 #       # Checkout code from git
-#       # Add ssh keys with fingerprint
-#       # attach workspace
+#       - add_ssh_keys:
+          # fingerprints:
+          #   - "d4:31:32:9a:3a:7a:4e:45:b7:6b:9e:3e:31:04:34:ff"
+#       - attach_workspace:
+          # at: ~/
 #       - run:
 #           name: Install dependencies
 #           command: |
-#             # your code here
+#             sudo apt-get update
+            # sudo apt-get install awscli
+            # sudo apt install python3-pip
+            # pip3 --version
+            # sudo python3 -m pip install ansible
+            # sudo apt install rsync -y
 #       - run:
 #           name: Deploy backend
 #           command: |
-#             # your code here
+#             cd backend
+              # npm i
+              # npm run build
+              # cd ..
+              # # Zip the directory
+              # tar -C backend -czvf artifact.tar.gz .
+              # cd .circleci/ansible
+              # echo "Contents  of the inventory.txt file is -------"
+              # cat inventory.txt
+              # ansible-playbook -i inventory.txt deploy-backend.yml
+#       - destroy-environment       
 #       # Here's where you will add some code to rollback on failure  
 
 #   smoke-test:
