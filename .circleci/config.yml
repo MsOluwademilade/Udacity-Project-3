@@ -271,14 +271,13 @@ jobs:
             sudo apt-get update
             sudo apt-get install awscli
             sudo apt install python3-pip
-            pip3 --version
             sudo python3 -m pip install ansible
             sudo apt install rsync -y
       - run: 
           name: "Install nodejs"
           command: |
             sudo apt-get update
-            npm install
+            curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash - 
             sudo apt-get install -y nodejs
             node --version
             npm --version   
