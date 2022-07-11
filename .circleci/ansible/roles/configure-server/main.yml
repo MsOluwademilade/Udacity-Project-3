@@ -29,15 +29,3 @@
       global: yes
       production: yes
       state: present
-
-
-
-
-
-
-
-
-
-
-
-  - name: "upgrade packages"
