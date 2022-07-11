@@ -204,7 +204,6 @@ jobs:
       - run: 
           name: Run migrations
           command: |
-            #!/bin/bash -eo pipeline
             cd backend
             npm install 
             npm run migrations --force>
@@ -294,9 +293,9 @@ jobs:
 
 #   smoke-test:
 #     docker:
-#       # Lightweight Docker image 
+#       - image: python:3.7-alpine3.11
 #     steps:
-#       # Checkout code from git
+#       - checkout
 #       - run:
 #           name: Install dependencies
 #           command: |
