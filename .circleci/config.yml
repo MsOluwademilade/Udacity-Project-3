@@ -13,22 +13,22 @@ commands:
             aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
             aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
 
-  revert-migrations:
-    description: Revert the last migration if successfully run in the current workflow.
-    steps:
-      - run: 
-          name: Revert migrations
-          working_directory: ./backend
-          when: on_fail
-          command: |
-            SUCCESS=$(curl --insecure curl https://kvdb.io/5Dum5hMhugUbDfC7EpCk2v/migration_${CIRCLE_WORKFLOW_ID:0:7})
-            echo $SUCCESS
-            if [[ "$SUCCESS" == "success" ]]
-            then
-              pwd
-              ls -la
-              npm run migrations:revert
-            fi
+  # revert-migrations:
+  #   description: Revert the last migration if successfully run in the current workflow.
+  #   steps:
+  #     - run: 
+  #         name: Revert migrations
+  #         working_directory: ./backend
+  #         when: on_fail
+  #         command: |
+  #           SUCCESS=$(curl --insecure curl https://kvdb.io/5Dum5hMhugUbDfC7EpCk2v/migration_${CIRCLE_WORKFLOW_ID:0:7})
+  #           echo $SUCCESS
+  #           if [[ "$SUCCESS" == "success" ]]
+  #           then
+  #             pwd
+  #             ls -la
+  #             npm run migrations:revert
+  #           fi
             
 jobs:
   build-frontend:
