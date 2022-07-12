@@ -307,14 +307,14 @@ jobs:
             pip install awscli
             pip install nodejs
             pip install npm
-      # - run:
-      #     name: Get backend url
-      #     command: |
-      #       export BACKEND_IP=$(aws ec2 describe-instances...............)
-      #       export API_URL="http://${BACKEND_IP}:3030"
-      #       echo "API_URL = ${API_URL}"
-      #       echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
-      #       cat frontend/.env
+      - run:
+          name: Get backend url
+          command: |
+            export BACKEND_IP=$(aws ec2 describe-instances...............)
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "API_URL = ${API_URL}"
+            echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+            cat frontend/.env
       - run:
           name: Backend smoke test.
           command: |
