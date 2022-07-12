@@ -1,34 +1,34 @@
 version: 2.1
 
-# commands:
-  # destroy-environment:
-  #   description: Destroy back-end and front-end cloudformation stacks given a workflow ID. 
-  #   steps:
-  #     - run:
-  #         name: Destroy environments
-  #         when: on_fail
-  #         command: |
-  #           aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
-  #           aws s3 ls
-  #           aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-  #           aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+commands:
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID. 
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws s3 ls
+            aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
 
-  # revert-migrations:
-  #   description: Revert the last migration if successfully run in the current workflow.
-  #   steps:
-  #     - run: 
-  #         name: Revert migrations
-  #         working_directory: ./backend
-  #         when: on_fail
-  #         command: |
-  #           SUCCESS=$(curl --insecure curl https://kvdb.io/5Dum5hMhugUbDfC7EpCk2v/migration_${CIRCLE_WORKFLOW_ID:0:7})
-  #           echo $SUCCESS
-  #           if [[ "$SUCCESS" == "success" ]]
-  #           then
-  #             pwd
-  #             ls -la
-  #             npm run migrations:revert
-  #           fi
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    steps:
+      - run: 
+          name: Revert migrations
+          working_directory: ./backend
+          when: on_fail
+          command: |
+            SUCCESS=$(curl --insecure curl https://kvdb.io/5Dum5hMhugUbDfC7EpCk2v/migration_${CIRCLE_WORKFLOW_ID:0:7})
+            echo $SUCCESS
+            if [[ "$SUCCESS" == "success" ]]
+            then
+              pwd
+              ls -la
+              npm run migrations:revert
+            fi
             
 jobs:
   build-frontend:
@@ -162,7 +162,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # - destroy-environment
+      - destroy-environment
 
   configure-infrastructure:
     docker:
@@ -183,7 +183,7 @@ jobs:
           command: |
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
-      # - destroy-environment         
+      - destroy-environment         
 
   run-migrations:
     docker:
@@ -215,7 +215,7 @@ jobs:
             then
               curl https://kvdb.io/5Dum5hMhugUbDfC7EpCk2v/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
-      # - destroy-environment
+      - destroy-environment
       # - revert-migrations
      # Here's where you will add some code to rollback on failure      
 
@@ -252,7 +252,7 @@ jobs:
             npm install
             npm run build
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      # - destroy-environment
+      - destroy-environment
       # Here's where you will add some code to rollback on failure      
                     
   deploy-backend:
@@ -292,7 +292,7 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
-#       - destroy-environment       
+      - destroy-environment       
 #       # Here's where you will add some code to rollback on failure  
 
   smoke-test:
