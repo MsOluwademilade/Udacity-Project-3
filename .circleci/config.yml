@@ -258,7 +258,7 @@ jobs:
             npm run build
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
-      # Here's where you will add some code to rollback on failure      
+      # Here is where you will add some code to rollback on failure      
                     
   deploy-backend:
     docker:
