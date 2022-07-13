@@ -1,0 +1,5 @@
+Public Url to GitHub repository (URL01)
+https://github.com/MsOluwademilade/Udacity-Project-3
+
+Public URL for your S3 Bucket (URL02)
+http://udapeople-a0f3070.s3-website-us-east-1.amazonaws.com
