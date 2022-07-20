@@ -213,34 +213,35 @@ jobs:
             cd backend
             npm install
             npm run migrations > migrations_dump.txt
-      - run:
-          name: Configure server and install prometheus node exporter
-          command: |
-            cd backend
-            echo ENVIRONMENT=production > ".env"
-            echo TYPEORM_CONNECTION=postgres >> ".env"
-            echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> ".env"
-            echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> ".env"
-            echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> ".env"
-            echo NODE_ENV=production >> ".env"
-            echo TYPEORM_HOST=$TYPEORM_HOST >> ".env"
-            echo TYPEORM_PORT=$TYPEORM_PORT >> ".env"
-            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ".env"
-            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
-            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
-            cat ~/project/backend/.env
-            cd ..
-            cd .circleci/ansible
-            ansible-playbook -i inventory.txt configure-server.yml
-      - run: 
-          name: Send migration results to kvdb.io
-          command: |
-            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
-            then
-              curl https://kvdb.io/3Z4CanmE84o44sVm7L5BLY/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
-            fi
-      - destroy-environment
-      - revert-migrations
+      # - run:
+      #     name: Configure server and install prometheus node exporter
+      #     command: |
+      #       cd backend
+      #       echo ENVIRONMENT=production > ".env"
+      #       echo TYPEORM_CONNECTION=postgres >> ".env"
+      #       echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> ".env"
+      #       echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> ".env"
+      #       echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> ".env"
+      #       echo NODE_ENV=production >> ".env"
+      #       echo TYPEORM_HOST=$TYPEORM_HOST >> ".env"
+      #       echo TYPEORM_PORT=$TYPEORM_PORT >> ".env"
+      #       echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ".env"
+      #       echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
+      #       echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
+      #       cat ~/project/backend/.env
+      #       cd ..
+      #       export ANSIBLE_HOST_KEY_CHECKING=False
+      #       cd .circleci/ansible
+      #       ansible-playbook -i inventory.txt configure-server.yml
+      # - run: 
+      #     name: Send migration results to kvdb.io
+      #     command: |
+      #       if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+      #       then
+      #         curl https://kvdb.io/3Z4CanmE84o44sVm7L5BLY/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+      #       fi
+      # - destroy-environment
+      # - revert-migrations
      # Here's where you will add some code to rollback on failure      
 
   deploy-frontend:
