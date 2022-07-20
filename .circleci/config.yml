@@ -230,7 +230,7 @@ jobs:
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
             cat ~/project/backend/.env
             cd ..
-            # export ANSIBLE_HOST_KEY_CHECKING=False
+          # export ANSIBLE_HOST_KEY_CHECKING=False
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
       - run: 
