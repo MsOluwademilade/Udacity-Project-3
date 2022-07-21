@@ -21,7 +21,7 @@ commands:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
-            
+
   # aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
   # aws s3 ls
   # aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
@@ -239,7 +239,6 @@ jobs:
       - run: 
           name: Run migrations
           command: |
-# !/bin/bash -eo pipefail
             cd backend
             npm install
             npm run migrations > migrations_dump.txt
