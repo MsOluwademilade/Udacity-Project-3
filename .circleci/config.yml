@@ -22,11 +22,6 @@ commands:
             unzip awscliv2.zip
             sudo ./aws/install
 
-  # aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
-  # aws s3 ls
-  # aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-  # aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
-
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     steps:
@@ -225,17 +220,6 @@ jobs:
     steps:
       - checkout
       - install_awscli
-      # - run: 
-      #     name: Install curl
-      #     command: |
-      #       sudo apt-get install curl -y
-      # - run: 
-      #     name: Install awscli
-      #     command: |
-      #       sudo apt-get update && sudo apt-get install -yy less
-      #       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      #       unzip awscliv2.zip
-      #       sudo ./aws/install
       - run: 
           name: Run migrations
           command: |
@@ -252,7 +236,6 @@ jobs:
             fi
       - destroy-environment
       - revert-migrations
-     # Here's where you will add some code to rollback on failure      
 
   deploy-frontend:
     docker:
@@ -289,7 +272,6 @@ jobs:
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
       - revert-migrations
-      # Here is where you will add some code to rollback on failure  
                     
   deploy-backend:
     docker:
@@ -329,7 +311,6 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment       
-#       # Here's where you will add some code to rollback on failure  
 
   smoke-test:
     docker:
@@ -377,7 +358,6 @@ jobs:
             fi
       - destroy-environment  
       - revert-migrations
-#       # Here's where you will add some code to rollback on failure  
 
   cloudfront-update:
     docker:
@@ -463,5 +443,5 @@ workflows:
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
           requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+      - cleanup:
+          requires: [cloudfront-update]
